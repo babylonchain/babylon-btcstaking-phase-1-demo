@@ -1,0 +1,18 @@
+[submodule "submodules/staking-api-service"]
+	path = submodules/staking-api-service
+	url = https://github.com/babylonchain/staking-api-service.git
+[submodule "submodules/staking-indexer"]
+	path = submodules/staking-indexer
+	url = https://github.com/babylonchain/staking-indexer.git
+[submodule "submodules/cli-tools"]
+	path = submodules/cli-tools
+	url = https://github.com/babylonchain/cli-tools.git
+[submodule "submodules/staking-expiry-checker"]
+	path = submodules/staking-expiry-checker
+	url = https://github.com/babylonchain/staking-expiry-checker.git
+[submodule "submodules/covenant-signer"]
+	path = submodules/covenant-signer
+	url = git@github.com:babylonchain/covenant-signer.git
+[submodule "submodules/simple-staking"]
+	path = submodules/simple-staking
+	url = https://github.com/babylonchain/simple-staking.git
