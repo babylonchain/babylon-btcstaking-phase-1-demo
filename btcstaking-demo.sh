@@ -237,7 +237,7 @@ check_indexer_metrics() {
     expect_count=$3
     while true; do
         count=$(curl -s localhost:2112/metrics | grep "$field" | grep "$type" | grep -v '#' | cut -d' ' -f2)
-        if [ $count -eq $expect_count ]; then
+        if [ -n "$count" ] && [ $count -eq $expect_count ]; then
             echo "$GREEN Target metrics achieved! Invalid transaction count on Staking Indexer: $count $NC"
             break
         else
@@ -292,7 +292,7 @@ echo "$YELLOW===== ### Scenario 1: No transactions are processed by the system b
 create_staking_tx 600000000 1000 # 6 BTC
 move_next_block
 move_next_block
-check_indexer_metrics "si_total_staking_txs" "" 0
+check_indexer_metrics "si_total_staking_txs" "active" 0
 check_staking_status 0 0
 
 echo ""
