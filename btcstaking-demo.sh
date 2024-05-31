@@ -237,8 +237,11 @@ check_indexer_metrics() {
     expect_count=$3
     while true; do
         count=$(curl -s localhost:2112/metrics | grep "$field" | grep "$type" | grep -v '#' | cut -d' ' -f2)
-        if [ -n "$count" ] && [ $count -eq $expect_count ]; then
-            echo "$GREEN Target metrics achieved! Invalid transaction count on Staking Indexer: $count $NC"
+        if [ -z "$count" ] && [ 0 -eq $expect_count ]; then
+            echo "$GREEN Target metrics achieved! Invalid transaction count on Staking Indexer: $expect_count $NC"
+            break
+        elif [ -n "$count" ] && [ $count -eq $expect_count ]; then
+            echo "$GREEN Target metrics achieved! Invalid transaction count on Staking Indexer: $expect_count $NC"
             break
         else
             sleep 2
@@ -314,6 +317,8 @@ check_mongoDB_info $(cat $DIR/800000000/tx_id) "active" "false"
 # At height 118, this tx will be mark as overflow due to TVL exceeding the staking cap
 move_next_block
 check_mongoDB_info $(cat $DIR/100000000/tx_id) "active" "true"
+check_indexer_metrics "si_total_staking_txs" "active" 2
+check_indexer_metrics "si_total_staking_txs" "overflow" 1
 check_staking_status 2 2
 
 # At height 119, we unbond the 2 BTC delegation with unbonding_time 2
